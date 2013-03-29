@@ -1,0 +1,17 @@
+{
+    "name": "mikehaertl/xreturnable",
+    "description": "Yii extension to create URLs that allow to return to a page by storing its GET Parameters on a stack.",
+    "keywords": ["yii","url"],
+    "homepage": "https://github.com/mikehaertl/xreturnable",
+    "type": "yii-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Haertl",
+            "email": "haertl.mike@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.0.0"
+    }
+}
