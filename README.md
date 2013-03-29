@@ -23,29 +23,27 @@ If you perform an action on the page `user/edit` you can use this code to return
 <?php
 $this->goBack()
 ```
-~~~
 
 or create a link to the originating page in the `view` with:
 
 ```php
 <?php echo CHtml::link('Cancel',$this->getReturnUrl()) ?>
 ```
-~~~
 
 See the included demo for a more extensive example.
 
-##Change Log
+## Change Log
 
-###Release 1.0.3, January 24, 2013
+### Release 1.0.3, January 24, 2013
 * Fixed bug with URL creation from module (gerthelsen)
 
-###Release 1.0.2, November 11, 2009
+### Release 1.0.2, November 11, 2009
 * Fixed bug with multi-dim GET parameters (thanks to Márcio for supplying a fix)
 * Name of GET stack variable is now configurable with paramName
 
-###Release 1.0.1, July 13, 2009
+### Release 1.0.1, July 13, 2009
 * Fixed bug with url compression and path format (thanks to robak for finding this)
 
-###Release 1.0.0, June 8, 2009
+### Release 1.0.0, June 8, 2009
 * Initial release
 
