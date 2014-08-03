@@ -5,7 +5,7 @@ action URLs that contain the GET parameters of the current page. After
 performing an action these parameters can be used to return to the
 originating page.</p>
 
-<p>As the return parameter are organized as a 
+<p>As the return parameter are organized as a
 <a href="http://en.wikipedia.org/wiki/Stack_(data_structure)">stack</a>
 multiple pages can be added and later be returned to.</p>
 
@@ -13,7 +13,8 @@ multiple pages can be added and later be returned to.</p>
 
 <p>Attach the behavior in the <tt>init()</tt> method of a controller:</p>
         <?php $this->beginWidget('CTextHighlighter',array('language'=>'PHP')) ?>
-        public function init() {
+        public function init()
+        {
             $this->attachBehavior('returnable','application.components.xreturnable.XReturnable');
         }
         <?php $this->endWidget(); ?>
@@ -36,7 +37,7 @@ multiple pages can be added and later be returned to.</p>
         and try to edit a user there. After you edit a user and click save, delete or cancel
         you get redirected to the list page again.</p>
 
-        <p>Now directly go to the edit form using 
+        <p>Now directly go to the edit form using
         <?php echo CHtml::link('this link',
             $this->createReturnableUrl('returnable/edit',array('id'=>124))
         ) ?>.</p>
@@ -55,9 +56,9 @@ multiple pages can be added and later be returned to.</p>
 
     <li>
         <b>Chained example</b>
-        <p>We can also chain multiple pages we want to return to. That way we can first go the 
+        <p>We can also chain multiple pages we want to return to. That way we can first go the
         <?php echo CHtml::link('list page',$this->createReturnableUrl('returnable/list')) ?>,
-        from there to any edit page and in the end return 
+        from there to any edit page and in the end return
         to this page again. Note the <b>Status</b> on the bottom of the list page</p>
 
         <?php $this->beginWidget('CTextHighlighter',array('language'=>'PHP')) ?>
@@ -65,4 +66,3 @@ multiple pages can be added and later be returned to.</p>
         <?php $this->endWidget(); ?>
     </li>
 </ol>
-

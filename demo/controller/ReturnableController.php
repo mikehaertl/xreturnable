@@ -7,21 +7,25 @@
  * @license See http://www.yiiframework/extension/xreturnable
  * @version 1.0.2
  */
-class ReturnableController extends CController {
-
-    public function init() {
+class ReturnableController extends CController
+{
+    public function init()
+    {
         $this->attachBehavior('returnable','XReturnable');
     }
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $this->render('index');
     }
 
-    public function actionList() {
+    public function actionList()
+    {
         $this->render('list');
     }
 
-    public function actionEdit() {
+    public function actionEdit()
+    {
         if (Yii::app()->request->isPostRequest) {
 
             // Perform saving here ...
@@ -35,7 +39,8 @@ class ReturnableController extends CController {
         $this->render('edit');
     }
 
-    public function actionDelete() {
+    public function actionDelete()
+    {
         if (Yii::app()->request->isPostRequest) {
 
             // Perform deletion here..
@@ -48,4 +53,3 @@ class ReturnableController extends CController {
     }
 
 }
-

@@ -11,10 +11,10 @@ on the buttons and see where you end up.</p>
 	<?php echo CHtml::submitButton('Save') ?>
 	<?php echo CHtml::link('Cancel',$this->getReturnUrl()) ?>
 	<?php echo CHtml::linkButton('Delete', array (
-		'submit' => $this->createReturnStackUrl('returnable/delete'),
-		'params' => array('id'=>123),
-		'confirm'=>'Are you sure?'
-	)) ?>
+        'submit' => $this->createReturnStackUrl('returnable/delete'),
+        'params' => array('id'=>123),
+        'confirm'=>'Are you sure?'
+    )) ?>
 </div>
 <?php echo CHtml::endForm() ?>
 
@@ -33,7 +33,8 @@ on the buttons and see where you end up.</p>
 		In an <b>action</b> <tt>goBack()</tt> can be used to directly
 		return to the last page on the stack:
         <?php $this->beginWidget('CTextHighlighter',array('language'=>'PHP')) ?>
-		public function actionEdit() {
+		public function actionEdit()
+		{
 			if (Yii::app()->request->isPostRequest) {
 				// Save ...
 
