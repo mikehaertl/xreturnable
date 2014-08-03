@@ -3,32 +3,32 @@
  * XReturnable behavior
  *
  * This behavior can create URLs that allow to return to a page
- * by storing its GET Parameters. It can be  be attached to a 
+ * by storing its GET Parameters. It can be  be attached to a
  * controller on its {@link Controller::init()} method.
  *
- * To store the return parameters a stack is used. This return stack 
+ * To store the return parameters a stack is used. This return stack
  * gets encoded and compressed and gets appended to the URL as
  * additional parameter '_xr'.
  *
- * {@link createReturnableUrl()} can be used like {@link CController::createUrl()} 
- * to create a URL that contains the encoded return stack including 
+ * {@link createReturnableUrl()} can be used like {@link CController::createUrl()}
+ * to create a URL that contains the encoded return stack including
  * the current page parameters.
  *
- * {@link createReturnStackUrl()} can be used to create a URL that contains 
+ * {@link createReturnStackUrl()} can be used to create a URL that contains
  * the unmodified return stack without the parameters of the current page
  * being added.
  *
  * Two methods are provided to return to the last page on the stack:
- * {@link getReturnUrl()} provides the URL to the last page whereas 
- * {@link goBack()} redirects to the last page on the stack. 
+ * {@link getReturnUrl()} provides the URL to the last page whereas
+ * {@link goBack()} redirects to the last page on the stack.
  *
  * Note 1: This behavoir requires that the view state of any page
- * you want to return to only depends on its $_GET parameters. 
+ * you want to return to only depends on its $_GET parameters.
  *
  * Note 2: The return stack is propagated via URL. As the URL length
- * is limited in some browsers (e.g. about 2KB for IE) this may 
+ * is limited in some browsers (e.g. about 2KB for IE) this may
  * lead to problems if your pages have lots of parameters or the parameters
- * are very big. So even since XReturnable uses gzcompress() to minimize 
+ * are very big. So even since XReturnable uses gzcompress() to minimize
  * URL length as much as possible you should make sure that your parameter
  * size can never exceed this limit.
  *
@@ -63,10 +63,10 @@ class XReturnable extends CBehavior
      * Creates a returnable URL with the encoded return stack appended
      * to the URL as GET parameter '_xr'. The current page's return
      * parameters where added to that stack.
-     * 
-     * @param mixed $route the route as used by {@link CController::createUrl}
-     * @param array $params additional GET parametes as used by {@link CController::createUrl}
-     * @param string $amp the separator as used by {@link CController::createUrl}
+     *
+     * @param  mixed  $route  the route as used by {@link CController::createUrl}
+     * @param  array  $params additional GET parametes as used by {@link CController::createUrl}
+     * @param  string $amp    the separator as used by {@link CController::createUrl}
      * @return string the constructed URL with appended return parameters
      */
     public function createReturnableUrl($route, $params=array(),$amp='&')
@@ -76,6 +76,7 @@ class XReturnable extends CBehavior
 
         $params[$this->paramName]=self::urlCompress($stack);
         Yii::trace('Compressed length: '.strlen($params[$this->paramName]),'XReturnable');
+
         return Yii::app()->createUrl($route,$params,$amp);
     }
 
@@ -83,10 +84,10 @@ class XReturnable extends CBehavior
      * Creates a URL with the encoded return stack appended
      * to the URL as GET parameter '_xr'. The stack doesn't contain
      * the parameters for the current page.
-     * 
-     * @param mixed $route the route as used by {@link CController::createUrl}
-     * @param array $params additional GET parametes as used by {@link CController::createUrl}
-     * @param string $amp the separator as used by {@link CController::createUrl}
+     *
+     * @param  mixed  $route  the route as used by {@link CController::createUrl}
+     * @param  array  $params additional GET parametes as used by {@link CController::createUrl}
+     * @param  string $amp    the separator as used by {@link CController::createUrl}
      * @return string the constructed URL with appended return parameters
      */
     public function createReturnStackUrl($route, $params=array(),$amp='&')
@@ -94,6 +95,7 @@ class XReturnable extends CBehavior
         $stack=$this->getReturnStack();
 
         $params[$this->paramName]=self::urlCompress($stack);
+
         return Yii::app()->createUrl($route,$params,$amp);
     }
 
@@ -112,45 +114,50 @@ class XReturnable extends CBehavior
                 $params[$this->paramName]=self::urlCompress($stack);
             $this->_returnUrl=Yii::app()->createUrl($route,$params);
         }
+
         return $this->_returnUrl;
     }
 
     /**
-     * Redirect to the last page on the stack. 
+     * Redirect to the last page on the stack.
      * @return bool Wether a return URL was found.
      */
-    public function goBack() {
+    public function goBack()
+    {
         if (($url=$this->getReturnUrl())===null)
             return false;
         $this->Owner->redirect($url);
+
         return true;
     }
 
     /**
      * Compress the given data for use in a URL
-     * 
+     *
      * @param mixed the data to compress
      * @static
      * @return string the compressed data
      */
-    public static function urlCompress($data) {
+    public static function urlCompress($data)
+    {
         return urlencode(base64_encode(gzcompress(serialize($data),9)));
     }
 
     /**
      * Uncompresses the given data
-     * 
+     *
      * @param string the compressed data
      * @static
      * @return mixed the uncompressed data
      */
-    public static function urlUncompress($data) {
+    public static function urlUncompress($data)
+    {
         return unserialize(gzuncompress(base64_decode(urldecode($data))));
     }
 
     /**
      * Create a URL safe representation of multi dim assoc arrays.
-     * 
+     *
      * For example will convert this array
      *
      *   array(
@@ -160,7 +167,7 @@ class XReturnable extends CBehavior
      *              'c2' => 2
      *          ),
      *      ),
-     * 
+     *
      * into
      *
      *   array(
@@ -168,8 +175,8 @@ class XReturnable extends CBehavior
      *      'a[b][c2]' => 2,
      *   )
      *
-     * @param mixed $tree 
-     * @param string $keyPrefix 
+     * @param  mixed  $tree
+     * @param  string $keyPrefix
      * @static
      * @access private
      * @return void
@@ -179,11 +186,12 @@ class XReturnable extends CBehavior
         $r=array();
         foreach ($a as $k => $v) {
             $nk= $p===null ? $k : $p.'['.$k.']';
-            if (is_array($v)) 
+            if (is_array($v))
                 $r += self::flattenAssocArray($v,$nk);
             else
                 $r[$nk]=$v;
         }
+
         return $r;
     }
 
@@ -201,6 +209,7 @@ class XReturnable extends CBehavior
             unset($this->_currentPageParams[$r]);
             array_unshift($this->_currentPageParams,$route);
         }
+
         return $this->_currentPageParams;
     }
 
@@ -211,6 +220,7 @@ class XReturnable extends CBehavior
     {
         if ($this->_returnStack===null)
             $this->loadStackFromUrl();
+
         return $this->_returnStack;
     }
 
